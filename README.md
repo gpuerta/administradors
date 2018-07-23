@@ -1,6 +1,6 @@
 # administradors
 
-<h1>Credits:</h1>
+<h1>Creditos:</h1>
 
 - Bootstrap 4
 - Material Design Icons
