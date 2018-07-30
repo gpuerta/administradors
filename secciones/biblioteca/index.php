@@ -3,7 +3,7 @@
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>La Quinta Ola</title>
   <!-- plugins:css -->
@@ -14,6 +14,19 @@
   <link rel="stylesheet" href="../../css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../images/favicon.png" />
+  <!-- Js para busqueda dinamica -->
+  <script type="text/javascript" src="../../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../../js/main.js"></script>
+
+  <script>
+    function validar(){
+   if (document.formulario.clave.value == document.formulario.clave2.value){
+          document.formulario.submit();
+   }else{
+          alert('Las claves no son iguales');
+   }
+}
+  </script>
 </head>
 <body>
   <div class="container-scroller">
@@ -144,8 +157,153 @@
       </nav>
       <!-- partial -->
        <!-- partial -->
-      <div class="main-panel">
+       <div class="main-panel">
         <div class="content-wrapper">
+           <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+                  <h2 class="">Listado de Libros</h2>
+                  <br>
+                   <div class="btn-group pull-right">
+        <button type='button' class="btn btn-gradient-success btn-sm btn-rounded btn-fw" data-toggle="modal" data-target="#nuevoarticulo"><span class="mdi mdi-plus-circle" ></span>Nueva Publicación</button>
+      </div>
+                 
+      <!--BUSQUEDA DE ARTÍCULOS -->
+        
+            <div class="form-group row">
+             
+              <div class="col-md-5">
+               <input type="text" class="form-control bg-transparent border-0" placeholder="Buscar" name="caja_busqueda" id="caja_busqueda"></input>
+              </div>
+              <div class="col-md-3">
+             
+                          <i class="mdi mdi-36px mdi-magnify text-danger"></i>
+                        
+              
+                <span id="loader"></span>
+              </div>
+              
+            </div>
+      
+      <!--DIV QUE CONTIENE LA TABLA DE ARTÍCULOS -->
+
+    <div id="datos"></div>
+   
+                </div>
+              </div>
+            </div>
+<!--MODAL PARA NUEVO ARTÍCULO -->
+
+<div class="modal fade" id="nuevoarticulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Nueva Publicación</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+ <form action="subir.php" method="post" enctype="multipart/form-data" name="formulario">
+           
+                    <p class="card-description">
+                      <b>Información del libro</b>
+                    </p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Título</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="titulo" required/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Autor</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="autor" required/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Categoría</label>
+                          <div class="col-sm-9">
+
+                            <?php 
+                            /* Connect To Database*/
+                            require('../../configuracion/config.php');
+
+          
+                             $query = "SELECT * FROM categoria order by categoria ASC";
+                             $resultado = $con->query($query);
+
+                             ?>
+                             <select class="form-control" name="categoria" required>
+                              <?php 
+                              while ($fila = $resultado->fetch_assoc()) {
+
+                               ?>
+                               <option></option>
+
+                              <option value="<?=$fila['id_categoria']?>"><?=utf8_encode($fila['categoria'])?></option>
+
+                             <?php 
+                             }
+
+                              ?>
+                            </select>
+
+                              <div class="col-md-12">
+                        <div class="form-group row">
+                          <label class="col-sm-12 col-form-label">Imágen del libro</label>
+                          <div class="col-sm-12">
+                             <input type="file" size="35"  name="img" class="file-upload-default" required>
+                      <div class="input-group col-xs-12">
+                        <input type="text"  class="form-control file-upload-info" disabled placeholder="Subir Imágen" >
+                        <span class="input-group-append">
+                          <button class="file-upload-browse btn btn-gradient-primary" type="button">Subir</button>
+                        </span>
+                      </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Url</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="url" required/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                   
+                    
+                   <div class="modal-footer">
+       
+        <input type="submit" name="" value="Aceptar"  class="btn btn-primary" onclick="validar()">
+      </form>
+       
+      </div>
+                </div>
+              </div>
+
+  </form>
+     
+       
+      </div>
+    </div>
+  </div>
+</div>
         </div>
         <!-- content-wrapper ends -->
         <!-- Footer -->
@@ -174,6 +332,8 @@
   <!-- Custom js for this page-->
   <script src="../../js/dashboard.js"></script>
   <!-- End custom js for this page-->
+   <!-- Custom js for this page-->
+  <script src="../../js/file-upload.js"></script>
 </body>
 
 </html>

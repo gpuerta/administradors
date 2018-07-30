@@ -2,16 +2,16 @@
 <?php
 if(!empty($_GET['id'])){
 
-	/* Connect To Database*/
-	require('../../../configuracion/config.php');
+  /* Connect To Database*/
+  require('../../../configuracion/config.php');
 
 
 
-		
-		$queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(DATE(fecha_creado), '%d-%m-%Y') as 'fecha_creado'  FROM articulo 
-			INNER JOIN estatus_articulo ON articulo.fk_estatus = estatus_articulo.id_estatus_articulo
-			INNER JOIN imagen_articulo ON articulo.fk_imagen = imagen_articulo.id_imagen_articulo
-			WHERE id_articulo= '".$_GET['id']."' ");
+    
+    $queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(DATE(fecha_creado), '%d-%m-%Y') as 'fecha_creado'  FROM articulo 
+      INNER JOIN estatus_articulo ON articulo.fk_estatus = estatus_articulo.id_estatus_articulo
+      INNER JOIN imagen_articulo ON articulo.fk_imagen = imagen_articulo.id_imagen_articulo
+      WHERE id_articulo= '".$_GET['id']."' ");
      
      ?>
 
@@ -67,10 +67,10 @@ tinymce.init({
                         
          <?php 
 
-					}
-				} 
+          }
+        } 
              }
-		?>
+    ?>
 
 
 <script src="../../../js/file-upload.js"></script>

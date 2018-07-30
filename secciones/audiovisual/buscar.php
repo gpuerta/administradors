@@ -5,19 +5,15 @@ require('../../configuracion/config.php');
           
     $salida = "";
 
-    $query = "SELECT * FROM persona
-    INNER JOIN usuario ON persona.fk_usuario = usuario.id_usuario
-    INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuario
-    INNER JOIN estatus_usuario ON usuario.fk_estatus_usuario = estatus_usuario.id_estatus_usuario
+    $query = "SELECT * FROM audiovisual
+     INNER JOIN categoria ON audiovisual.fk_categoria = categoria.id_categoria
      LIMIT 10";
 
     if (isset($_POST['consulta'])) {
     	$q = $con->real_escape_string($_POST['consulta']);
-    	$query = "SELECT * FROM persona
-    INNER JOIN usuario ON persona.fk_usuario = usuario.id_usuario
-    INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuario
-    INNER JOIN estatus_usuario ON usuario.fk_estatus_usuario = estatus_usuario.id_estatus_usuario
-     WHERE cedula LIKE '%$q%' or nombres LIKE '%$q%' ";
+    	$query = "SELECT * FROM audiovisual
+     INNER JOIN categoria ON audiovisual.fk_categoria = categoria.id_categoria
+     WHERE titulo LIKE '%$q%' or categoria LIKE '%$q%' ";
     }
 
     $resultado = $con->query($query);
@@ -27,17 +23,13 @@ require('../../configuracion/config.php');
     			<thead>
     				<tr id='titulo'>
     					 <th>
-                          Usuario
+                          Título
                         </th>
+                       
                         <th>
-                          Cédula
+                          Categoría
                         </th>
-                        <th>
-                          Correo
-                        </th>
-                        <th>
-                          Estatus
-                        </th>
+                        
                         <th>
                           Acciones
                         </th>
@@ -51,23 +43,24 @@ require('../../configuracion/config.php');
     	while ($fila = $resultado->fetch_assoc()) {
            
     		$salida.="<tr>
-    					<td hidden>".$fila['id_usuario']."</td>
-                        <td hidden>".$fila['id_persona']."</td>
-    					<td>".$fila['usuario']."</td>
-    					<td>".$fila['cedula']."</td>
-    					<td>".$fila['correo']."</td>
-              <td>".$fila['estatus_usuario']."</td>
+    					<td hidden>".$fila['id_audiovisual']."</td>
+                        <td hidden>".$fila['id_audiovisual']."</td>
+    					<td>".$fila['titulo']."</td>
+    				
+    					<td>".utf8_encode($fila['categoria'])."</td>
+              
     					
                         <td>
-                         <a href='javascript:void(0);'  data-href='editar.php?id=".$fila['id_usuario']."'  class='openPopup1'>
-                         <button type='button' title='Editar Usuarios' class='btn btn-gradient-primary btn-rounded btn-icon'>
+                         <a href='javascript:void(0);'  data-href='editar.php?id=".$fila['id_audiovisual']."'  class='openPopup1'>
+                         <button type='button' title='Editar libro' class='btn btn-gradient-primary btn-rounded btn-icon'>
                           <i class='mdi mdi-auto-fix'></i>
                         </button>
                       </a>
-                      <a href='javascript:void(0);'  data-href='ver.php?id=".$fila['id_usuario']."'  class='openPopup'><button type='button' title='Ver Usuario' class='btn btn-gradient-danger btn-rounded btn-icon'>
+                       
+                      <a href='javascript:void(0);'  data-href='ver.php?id=".$fila['id_audiovisual']."'  class='openPopup'><button type='button' title='Ver Usuario' class='btn btn-gradient-danger btn-rounded btn-icon'>
                           <i class='mdi mdi-eye'></i>
                         </button></a>
-                        <a href='javascript:void(0);'  data-href='estatus.php?id=".$fila['id_usuario']."'  class='openPopup3'>
+                        <a href='javascript:void(0);'  data-href='estatus.php?id=".$fila['id_audiovisual']."'  class='openPopup3'>
                         <button type='button' title='Estatus Usuario' class='btn btn-gradient-dark btn-rounded btn-icon'>
                           <i class='mdi mdi-account-switch'></i>
                         </button>
@@ -95,7 +88,7 @@ require('../../configuracion/config.php');
 
 
 
-<!--MODAL PARA VER ARTÍCULO -->
+<!--MODAL PARA VER LIBRO -->
 <script>
   $(document).ready(function(){
     $('.openPopup').on('click',function(){
@@ -114,7 +107,7 @@ require('../../configuracion/config.php');
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-               <h3 class="modal-title" id="exampleModalLabel">Ficha de Usuario</h3>
+               <h3 class="modal-title" id="exampleModalLabel">Ficha del Video</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -131,7 +124,7 @@ require('../../configuracion/config.php');
 </div>
 
 
-<!--MODAL PARA EDITAR USUARIO -->
+<!--MODAL PARA EDITAR LIBRO -->
 <script>
   $(document).ready(function(){
     $('.openPopup1').on('click',function(){
@@ -148,7 +141,7 @@ require('../../configuracion/config.php');
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Nuevo Usuario</h3>
+        <h3 class="modal-title" id="exampleModalLabel">Modificar Publicación</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -156,14 +149,44 @@ require('../../configuracion/config.php');
       <div class="modal-body">
         
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" href="buscar_camion.php">Cerrar</button>
-            </div>
+           
         </div>
     </div>
   </div>
 </div>
 
+<!--MODAL PARA EDITAR IMÁGEN -->
+<script>
+  $(document).ready(function(){
+    $('.openPopup2').on('click',function(){
+        var dataURL = $(this).attr('data-href');
+        $('.modal-body').load(dataURL,function(){
+            $('#editar_imagen').modal({show:true});
+
+        });
+    }); 
+});
+</script>
+<!-- Modal -->
+<div class="modal fade" id="editar_imagen" role="dialog">
+    <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+               <h3 class="modal-title" id="exampleModalLabel">Editar Portada</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+        
+            </div>
+            
+        </div>
+      
+    </div>
+</div>
 
 
 
