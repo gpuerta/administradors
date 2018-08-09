@@ -119,9 +119,7 @@ require('../../../configuracion/config.php');
             <div class="modal-body">
 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" href="buscar_camion.php">Cerrar</button>
-            </div>
+            
         </div>
       
     </div>
@@ -154,9 +152,7 @@ require('../../../configuracion/config.php');
             <div class="modal-body">
         
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" href="buscar_camion.php">Cerrar</button>
-            </div>
+           
         </div>
       
     </div>
@@ -190,9 +186,7 @@ require('../../../configuracion/config.php');
             <div class="modal-body">
         
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" href="buscar_camion.php">Cerrar</button>
-            </div>
+           
         </div>
       
     </div>

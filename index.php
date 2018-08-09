@@ -1,3 +1,12 @@
+<?php
+   session_start();
+   require 'configuracion/config.php';
+   if(isset($_SESSION['usuario'])){
+  echo '<script> window.location="secciones/index.php"; </script>';
+  }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,23 +38,23 @@
                 <img src="images/logo/quinta_ola.png">
               </div>
              
-              <form class="pt-3">
+              <form class="pt-3" action="clases/funciones.php" method="post">
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Usuario">
+                  <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" name="usuario" placeholder="Usuario">
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Clave">
+                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" name="clave" placeholder="Clave">
                 </div>
                 <div class="mt-3">
-                  <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn btn-rounded btn-fw" href="index.html">INICIAR SESIÓN</a>
+                 
+                  <input type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn btn-rounded btn-fw" name="login" value="INICIAR SESIÓN">
                 </div>
                 <div class="my-2 d-flex justify-content-between pull-right">
                   
                   <a href="#" class="auth-link text-black">Olvidó clave?</a>
-                </div>
-                
-                
+                </div>                              
               </form>
+              
             </div>
           </div>
         </div>

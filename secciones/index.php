@@ -1,3 +1,14 @@
+<?php
+session_start();
+/* Connect To Database*/
+require('../configuracion/config.php');
+
+if(!isset($_SESSION["usuario"])){ //Si no ha iniciado sesión redirecciona a index.php
+    header("Location: ../index.php");
+  }
+  
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +27,27 @@
   <link rel="shortcut icon" href="../images/favicon.png" />
 </head>
 <body>
+  <?php
+
+
+    $queryPrimeraTabla1 = mysqli_query($con,"SELECT * from persona
+INNER JOIN usuario ON persona.fk_usuario = usuario.id_usuario
+INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuario
+      WHERE usuario= '".$_SESSION["usuario"]."' ");
+      
+    //comprobamos si se recupero alguna fila 
+                    //mysql_num_rows() en caso de exito devuelve 1
+        if( mysqli_num_rows($queryPrimeraTabla1) > 0 ){
+            while( $resultado1 = mysqli_fetch_array($queryPrimeraTabla1) ){
+                    $id_persona=$resultado1['id_persona'];  
+                    $nombres=$resultado1['nombres'];
+                    $usuario=$resultado1['usuario'];
+                    $tipo_usuario=$resultado1['tipo_usuario'];
+                    $nombre_imagen=$resultado1['nombre_imagen'];
+                    
+                    
+
+         ?>
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -25,33 +57,27 @@
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-stretch">
         <div class="search-field d-none d-md-block">
-          <form class="d-flex align-items-center h-100" action="#">
-            <div class="input-group">
-              <div class="input-group-prepend bg-transparent">
-                  <i class="input-group-text border-0 mdi mdi-magnify"></i>                
-              </div>
-              <input type="text" class="form-control bg-transparent border-0" placeholder="Buscar">
-            </div>
-          </form>
+          
         </div>
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <div class="nav-profile-img">
-                <img src="../images/faces/face1.jpg" alt="image">
+                <img src="../images/perfil/<?=$nombre_imagen?>" alt="image">
                 <span class="availability-status online"></span>             
               </div>
+
               <div class="nav-profile-text">
-                <p class="mb-1 text-white">Usuario Conectado</p>
+                <p class="mb-1 text-white"><?=$nombres?></p>
               </div>
             </a>
             <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="perfil/index.php">
                 <i class="mdi mdi-account-circle mr-2 text-success"></i>
                 Perfil
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="../clases/logout.php">
                 <i class="mdi mdi-logout mr-2 text-primary"></i>
                 Cerrar Sesión
               </a>
@@ -76,14 +102,14 @@
           <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
               <div class="nav-profile-image">
-                <img src="../images/faces/face1.jpg" alt="profile">
+                <img src="../images/perfil/<?=$nombre_imagen?>" alt="profile">
                 <span class="login-status online"></span> <!--change to offline or busy as needed-->              
               </div>
               <div class="nav-profile-text d-flex flex-column">
-                <span class="font-weight-bold mb-2">Usuario Conectado</span>
-                <span class="text-secondary text-small">Administrador</span>
+                <span class="font-weight-bold mb-2">Usuario: <?=$usuario?> </span>
+                <span class="text-secondary text-small"><?=$tipo_usuario?></span>
               </div>
-              <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+              
             </a>
           </li>
           <li class="nav-item">
@@ -133,19 +159,283 @@
               <i class="mdi mdi-image-area menu-icon"></i>
             </a>
           </li>
+          <?php if($_SESSION['id_tipo_usuario']==1) { ?>
           <li class="nav-item">
             <a class="nav-link" href="usuarios/index.php">
               <span class="menu-title">Usuarios</span>
               <i class="mdi mdi-account-card-details menu-icon"></i>
             </a>
           </li>
-          
+          <?php } ?>
         </ul>
       </nav>
       <!-- partial -->
        <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+
+          <div class="page-header">
+            <h3 class="page-title">
+              <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>                 
+              </span>
+              Inicio/Últimos artículos publicados
+            </h3>
+          </div>
+
+          <!--MENSAJES NUEVOS -->
+
+          <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-danger card-img-holder text-white">
+                <div class="card-body">
+                  <img src="../images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>
+                  <h4 class="font-weight-normal mb-3">Tribu Urquia
+                    <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  </h4>
+                  <?php
+
+
+    $queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(fecha_creado,'%d-%m-%Y') AS fecha_creado FROM
+articulo
+where fk_estatus='2' and fk_seccion='1' ORDER BY id_articulo DESC limit 3");
+      
+    //comprobamos si se recupero alguna fila 
+                    //mysql_num_rows() en caso de exito devuelve 1
+        if( mysqli_num_rows($queryPrimeraTabla1) > 0 ){
+            while( $resultado1 = mysqli_fetch_array($queryPrimeraTabla1) ){
+                   
+                    $titulo=$resultado1['titulo'];
+                    $fecha_creado=$resultado1['fecha_creado'];
+                    
+
+         ?>
+
+          <ul>
+            <li><?=$titulo?> (<?=$fecha_creado?>)</li>
+          </ul>
+
+
+         <?php 
+
+          }
+        } 
+             
+    ?>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-info card-img-holder text-white">
+                <div class="card-body">
+                  <img src="../images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>                  
+                  <h4 class="font-weight-normal mb-3">Ultravioleta
+                    <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                  </h4>
+                   <?php
+
+
+    $queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(fecha_creado,'%d-%m-%Y') AS fecha_creado FROM
+articulo
+where fk_estatus='2'and fk_seccion='2' ORDER BY id_articulo DESC limit 3");
+      
+    //comprobamos si se recupero alguna fila 
+                    //mysql_num_rows() en caso de exito devuelve 1
+        if( mysqli_num_rows($queryPrimeraTabla1) > 0 ){
+            while( $resultado1 = mysqli_fetch_array($queryPrimeraTabla1) ){
+                   
+                    $titulo=$resultado1['titulo'];
+                    $fecha_creado=$resultado1['fecha_creado'];
+                    
+
+         ?>
+
+          <ul>
+            <li><?=$titulo?> (<?=$fecha_creado?>)</li>
+          </ul>
+
+
+         <?php 
+
+          }
+        } 
+             
+    ?>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-success card-img-holder text-white">
+                <div class="card-body">
+                  <img src="../images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>                                    
+                  <h4 class="font-weight-normal mb-3">Ni una Menos
+                    <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                  </h4>
+                                  <?php
+
+
+    $queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(fecha_creado,'%d-%m-%Y') AS fecha_creado FROM
+articulo
+where fk_estatus='2'and fk_seccion='6' ORDER BY id_articulo DESC limit 3");
+      
+    //comprobamos si se recupero alguna fila 
+                    //mysql_num_rows() en caso de exito devuelve 1
+        if( mysqli_num_rows($queryPrimeraTabla1) > 0 ){
+            while( $resultado1 = mysqli_fetch_array($queryPrimeraTabla1) ){
+                   
+                    $titulo=$resultado1['titulo'];
+                    $fecha_creado=$resultado1['fecha_creado'];
+                    
+
+         ?>
+
+          <ul>
+            <li><?=$titulo?> (<?=$fecha_creado?>)</li>
+          </ul>
+
+
+         <?php 
+
+          }
+        } 
+             
+    ?>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-primary card-img-holder text-white">
+                <div class="card-body">
+                  <img src="../images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>
+                  <h4 class="font-weight-normal mb-3">Opinión Feminista
+                    <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  </h4>
+                                   <?php
+
+
+    $queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(fecha_creado,'%d-%m-%Y') AS fecha_creado FROM
+articulo
+where fk_estatus='2'and fk_seccion='4' ORDER BY id_articulo DESC limit 3");
+      
+    //comprobamos si se recupero alguna fila 
+                    //mysql_num_rows() en caso de exito devuelve 1
+        if( mysqli_num_rows($queryPrimeraTabla1) > 0 ){
+            while( $resultado1 = mysqli_fetch_array($queryPrimeraTabla1) ){
+                   
+                    $titulo=$resultado1['titulo'];
+                    $fecha_creado=$resultado1['fecha_creado'];
+                    
+
+         ?>
+
+          <ul>
+            <li><?=$titulo?> (<?=$fecha_creado?>)</li>
+          </ul>
+
+
+         <?php 
+
+          }
+        } 
+             
+    ?>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-warning card-img-holder text-white">
+                <div class="card-body">
+                  <img src="../images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>                  
+                  <h4 class="font-weight-normal mb-3">Nosotras en el Mundo
+                    <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                  </h4>
+                                   <?php
+
+
+    $queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(fecha_creado,'%d-%m-%Y') AS fecha_creado FROM
+articulo
+where fk_estatus='2'and fk_seccion='5' ORDER BY id_articulo DESC limit 3");
+      
+    //comprobamos si se recupero alguna fila 
+                    //mysql_num_rows() en caso de exito devuelve 1
+        if( mysqli_num_rows($queryPrimeraTabla1) > 0 ){
+            while( $resultado1 = mysqli_fetch_array($queryPrimeraTabla1) ){
+                   
+                    $titulo=$resultado1['titulo'];
+                    $fecha_creado=$resultado1['fecha_creado'];
+                    
+
+         ?>
+
+          <ul>
+            <li><?=$titulo?> (<?=$fecha_creado?>)</li>
+          </ul>
+
+
+         <?php 
+
+          }
+        } 
+             
+    ?>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-dark card-img-holder text-white">
+                <div class="card-body">
+                  <img src="../images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>                                    
+                  <h4 class="font-weight-normal mb-3">Proyectate
+                    <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                  </h4>
+                                   <?php
+
+
+    $queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(fecha_creado,'%d-%m-%Y') AS fecha_creado FROM
+articulo
+where fk_estatus='2'and fk_seccion='3' ORDER BY id_articulo DESC limit 3");
+      
+    //comprobamos si se recupero alguna fila 
+                    //mysql_num_rows() en caso de exito devuelve 1
+        if( mysqli_num_rows($queryPrimeraTabla1) > 0 ){
+            while( $resultado1 = mysqli_fetch_array($queryPrimeraTabla1) ){
+                   
+                    $titulo=$resultado1['titulo'];
+                    $fecha_creado=$resultado1['fecha_creado'];
+                    
+
+         ?>
+
+          <ul>
+            <li><?=$titulo?> (<?=$fecha_creado?>)</li>
+          </ul>
+
+
+         <?php 
+
+          }
+        } 
+             
+    ?>
+                </div>
+              </div>
+            </div>
+          </div>
+
+  
+      
+
+
+
+
+
+
+
+
         </div>
         <!-- content-wrapper ends -->
         <!-- Footer -->
@@ -175,5 +465,10 @@
   <script src="../js/dashboard.js"></script>
   <!-- End custom js for this page-->
 </body>
+ <?php 
 
+          }
+        } 
+             
+    ?>
 </html>

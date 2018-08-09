@@ -27,7 +27,7 @@ require('../../../configuracion/config.php');
 $fecha=date('Y-m-d H:i:s');
 
 
-$sql="INSERT INTO  imagen_articulo (referencia,ruta) values('".$_POST['referencia']."','".$destino."') ";
+$sql="INSERT INTO  imagen_articulo (referencia,ruta,nombre_imagen) values('".$_POST['referencia']."','".$destino."','".$archivo."') ";
 
 $imagen=mysqli_query($con,$sql);
 

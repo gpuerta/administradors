@@ -6,7 +6,7 @@ require('../../configuracion/config.php');
     $salida = "";
 
     $query = "SELECT * FROM audiovisual
-     INNER JOIN categoria ON audiovisual.fk_categoria = categoria.id_categoria
+     INNER JOIN categoria ON audiovisual.fk_categoria = categoria.id_categoria ORDER BY id_audiovisual DESC
      LIMIT 10";
 
     if (isset($_POST['consulta'])) {
@@ -60,11 +60,7 @@ require('../../configuracion/config.php');
                       <a href='javascript:void(0);'  data-href='ver.php?id=".$fila['id_audiovisual']."'  class='openPopup'><button type='button' title='Ver Usuario' class='btn btn-gradient-danger btn-rounded btn-icon'>
                           <i class='mdi mdi-eye'></i>
                         </button></a>
-                        <a href='javascript:void(0);'  data-href='estatus.php?id=".$fila['id_audiovisual']."'  class='openPopup3'>
-                        <button type='button' title='Estatus Usuario' class='btn btn-gradient-dark btn-rounded btn-icon'>
-                          <i class='mdi mdi-account-switch'></i>
-                        </button>
-                      </a>
+                       
     
 
                         </td>
@@ -115,9 +111,7 @@ require('../../configuracion/config.php');
             <div class="modal-body">
               
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" href="buscar_camion.php">Cerrar</button>
-            </div>
+            
         </div>
       
     </div>

@@ -1,7 +1,7 @@
 <?php 
 
 /* Connect To Database*/
-require('../../../configuracion/config.php');
+require('../../configuracion/config.php');
           
             
           $status = ""; 
@@ -17,7 +17,7 @@ require('../../../configuracion/config.php');
         if($tipo == "image/jpeg" || $tipo == "image/jpg" or $tipo == "image/png" ) {
 
           //subimos la imagen original
-          $destino =  "../../../images/articulo/tribu_urquia/".$archivo;               
+          $destino =  "../../images/hero/".$archivo;               
           //$destino =  "../../vuelo_index/imagen/carrusel/".$prefijo."_".$archivo; //ruta de la imagen original
           (copy($_FILES['img']['tmp_name'],$destino)) or die ("Error al subir la imagen ".$archivo); 
           //$status = "La imagen <b>".$archivo."</b> se a subido correctamente !"; 
@@ -34,7 +34,7 @@ $imagen=mysqli_query($con,$sql);
 $id=mysqli_insert_id($con);
 
 
-$sql1="INSERT INTO  articulo (titulo,detalle,fecha_creado,fk_imagen,fk_seccion,fk_autor,fk_estatus) values('".$_POST['titulo']."','".$_POST['detalle']."','".$fecha."',".$id.",'5','1','".$_POST['estatus']."') ";
+$sql1="INSERT INTO  hero (titulo,detalle,fecha_creado,fk_imagen,fk_seccion,fk_autor,fk_estatus) values('".$_POST['titulo']."','".$_POST['detalle']."','".$fecha."',".$id.",'1','1','1') ";
 
 $articulo=mysqli_query($con,$sql1); 
 

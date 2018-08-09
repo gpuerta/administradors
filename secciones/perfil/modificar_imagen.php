@@ -1,7 +1,7 @@
 <?php 
 
 /* Connect To Database*/
-require('../../../configuracion/config.php');
+require('../../configuracion/config.php');
           
             
           $status = ""; 
@@ -17,7 +17,8 @@ require('../../../configuracion/config.php');
         if($tipo == "image/jpeg" || $tipo == "image/jpg" or $tipo == "image/png" ) {
 
           //subimos la imagen original
-          $destino =  "../../../images/articulo/tribu_urquia/".$archivo;               
+          $destino =  "../../images/perfil/".$archivo;
+
           //$destino =  "../../vuelo_index/imagen/carrusel/".$prefijo."_".$archivo; //ruta de la imagen original
           (copy($_FILES['img']['tmp_name'],$destino)) or die ("Error al subir la imagen ".$archivo); 
           //$status = "La imagen <b>".$archivo."</b> se a subido correctamente !"; 
@@ -27,23 +28,18 @@ require('../../../configuracion/config.php');
 $fecha=date('Y-m-d H:i:s');
 
 
-$sql="INSERT INTO  imagen_articulo (referencia,ruta,nombre_imagen) values('".$_POST['referencia']."','".$destino."','".$archivo."') ";
+$sql="UPDATE  usuario SET imagen_perfil='".$destino."', nombre_imagen='".$archivo."' WHERE id_usuario='".$_POST['id_usuario']."'";
 
 $imagen=mysqli_query($con,$sql);
 
-$id=mysqli_insert_id($con);
 
 
-$sql1="INSERT INTO  articulo (titulo,detalle,fecha_creado,fk_imagen,fk_seccion,fk_autor,fk_estatus) values('".$_POST['titulo']."','".$_POST['detalle']."','".$fecha."',".$id.",'5','1','".$_POST['estatus']."') ";
 
-$articulo=mysqli_query($con,$sql1); 
-
-
-echo"<script type=\"text/javascript\">alert('Se ha guardado'); window.location='index.php';</script>";  
+echo"<script type=\"text/javascript\">alert('Se ha editado'); window.location='index.php';</script>";  
 
 
             
-           }else{echo"<script type=\"text/javascript\">alert('solo jph'); window.location='index.php';</script>";  
+           }else{echo"<script type=\"text/javascript\">alert('solo jpg'); window.location='index.php';</script>";  
 }      
        
 
