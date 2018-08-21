@@ -20950,3 +20950,8 @@ dl li {
 .pull-right {
   float: right !important;
 }
+
+.img-responsive {
+    max-width: 100%;
+    height: 300px;
+}

@@ -4,7 +4,7 @@ session_start();
 require('../configuracion/config.php');
 
 if(!isset($_SESSION["usuario"])){ //Si no ha iniciado sesión redirecciona a index.php
-    header("Location: ../index.php");
+    header("Location: ../");
   }
   
 
@@ -72,7 +72,7 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
               </div>
             </a>
             <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="perfil/index.php">
+              <a class="dropdown-item" href="perfil/">
                 <i class="mdi mdi-account-circle mr-2 text-success"></i>
                 Perfil
               </a>
@@ -396,22 +396,22 @@ where fk_estatus='2'and fk_seccion='5' ORDER BY id_articulo DESC limit 3");
 
 
     $queryPrimeraTabla1 = mysqli_query($con,"SELECT *, DATE_FORMAT(fecha_creado,'%d-%m-%Y') AS fecha_creado FROM
-articulo
-where fk_estatus='2'and fk_seccion='3' ORDER BY id_articulo DESC limit 3");
+proyectate
+ ORDER BY id_proyectate DESC limit 3");
       
     //comprobamos si se recupero alguna fila 
                     //mysql_num_rows() en caso de exito devuelve 1
         if( mysqli_num_rows($queryPrimeraTabla1) > 0 ){
             while( $resultado1 = mysqli_fetch_array($queryPrimeraTabla1) ){
                    
-                    $titulo=$resultado1['titulo'];
+                    $empresa=$resultado1['empresa'];
                     $fecha_creado=$resultado1['fecha_creado'];
                     
 
          ?>
 
           <ul>
-            <li><?=$titulo?> (<?=$fecha_creado?>)</li>
+            <li><?=$empresa?> (<?=$fecha_creado?>)</li>
           </ul>
 
 

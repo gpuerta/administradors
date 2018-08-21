@@ -2,7 +2,7 @@
    session_start();
    require 'configuracion/config.php';
    if(isset($_SESSION['usuario'])){
-  echo '<script> window.location="secciones/index.php"; </script>';
+  echo '<script> window.location="secciones/"; </script>';
   }
 ?>
 
@@ -51,7 +51,7 @@
                 </div>
                 <div class="my-2 d-flex justify-content-between pull-right">
                   
-                  <a href="#" class="auth-link text-black">Olvidó clave?</a>
+                  <a href="clases/seguridad.php" class="auth-link text-black">Olvidó clave?</a>
                 </div>                              
               </form>
               

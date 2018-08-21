@@ -4,7 +4,7 @@ session_start();
 require('../../configuracion/config.php');
 
 if(!isset($_SESSION["usuario"])){ //Si no ha iniciado sesión redirecciona a index.php
-    header("Location: ../../index.php");
+    header("Location: ../../");
   }
   
 
@@ -84,7 +84,7 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
               </div>
             </a>
             <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="../perfil/index.php">
+              <a class="dropdown-item" href="../perfil/">
                 <i class="mdi mdi-account-circle mr-2 text-success"></i>
                 Perfil
               </a>
@@ -132,47 +132,47 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                 <li class="nav-item"> <a class="nav-link" href="../articulos/tribu_urquia/index.php">
+                 <li class="nav-item"> <a class="nav-link" href="../articulos/tribu_urquia/">
                   La Tribu de Urquia
                 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../articulos/ultravioleta/index.php">
+                <li class="nav-item"> <a class="nav-link" href="../articulos/ultravioleta/">
                   Ultravioleta
                 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../articulos/defiendete/index.php">
+                <li class="nav-item"> <a class="nav-link" href="../articulos/defiendete/">
                   Ni una Menos
                 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../articulos/opinion/index.php">
+                <li class="nav-item"> <a class="nav-link" href="../articulos/opinion/">
                   Opinión Feminista
                 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../articulos/proyectate/index.php">
+                <li class="nav-item"> <a class="nav-link" href="../articulos/proyectate/">
                   Proyectate
                 </a></li>
-                 <li class="nav-item"> <a class="nav-link" href="../secciones/nosotras/index.php">
+                 <li class="nav-item"> <a class="nav-link" href="../secciones/nosotras/">
                   Nosotras en el Mundo
                 </a></li>
               </ul>
             </div>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="../audiovisual/index.php">
+            <a class="nav-link" href="../audiovisual/">
               <span class="menu-title">Audiovisual</span>
               <i class="mdi mdi-video menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../biblioteca/index.php">
+            <a class="nav-link" href="../biblioteca/">
               <span class="menu-title">Bliblioteca</span>
               <i class="mdi mdi-library menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../hero/index.php">
+            <a class="nav-link" href="../hero/">
               <span class="menu-title">Hero</span>
               <i class="mdi mdi-image-area menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../usuarios/index.php">
+            <a class="nav-link" href="../usuarios/">
               <span class="menu-title">Usuarios</span>
               <i class="mdi mdi-account-card-details menu-icon"></i>
             </a>
@@ -262,7 +262,7 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
 
                             <?php 
                             /* Connect To Database*/
-                            require('../../configuracion/config.php');
+                           
 
           
                              $query = "SELECT * FROM categoria order by categoria ASC";

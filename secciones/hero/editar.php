@@ -51,7 +51,6 @@ tinymce.init({
               <select name="estatus" class="form-control">
                 <option value="<?=$estatus_id?>"><?=$estatus?></option>
                 <option value="1">Privado</option>
-                <option value="2">Publicado</option>
                 <option value="3">Principal</option>
                
               </select>

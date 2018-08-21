@@ -5,7 +5,7 @@ require('../../../configuracion/config.php');
           
     $salida = "";
 
-    $query = "SELECT *, DATE_FORMAT(DATE(fecha_creado), '%d-%m-%Y') as 'fecha_creado'  FROM articulo INNER JOIN estatus_articulo ON articulo.fk_estatus = estatus_articulo.id_estatus_articulo where fk_seccion='2'LIMIT 10";
+    $query = "SELECT *, DATE_FORMAT(DATE(fecha_creado), '%d-%m-%Y') as 'fecha_creado'  FROM articulo INNER JOIN estatus_articulo ON articulo.fk_estatus = estatus_articulo.id_estatus_articulo where fk_seccion='2' order by id_articulo desc LIMIT 10";
 
     if (isset($_POST['consulta'])) {
     	$q = $con->real_escape_string($_POST['consulta']);
@@ -50,7 +50,7 @@ require('../../../configuracion/config.php');
     					<td>".$fila['fecha_creado']."</td>
     					<td>".$fila['estatus_articulo']."</td>
                         <td>
-                         <a href='javascript:void(0);'  data-href='editar.php?id=".$fila['id_articulo']."'  class='openPopup1'>
+                         <a href='editar.php?id=".$fila['id_articulo']."' >
                          <button type='button' title='Editar Artículo' class='btn btn-gradient-primary btn-rounded btn-icon'>
                           <i class='mdi mdi-auto-fix'></i>
                         </button>
@@ -61,10 +61,10 @@ require('../../../configuracion/config.php');
                           <i class='mdi mdi-file-image'></i>
                         </button>
                       </a>
-                      <a href='javascript:void(0);'  data-href='ver.php?id=".$fila['id_articulo']."'  class='openPopup'><button type='button' title='Ver' class='btn btn-gradient-danger btn-rounded btn-icon'>
+                      <a href='javascript:void(0);'  data-href='ver.php?id=".$fila['id_articulo']."'  class='openPopup3'><button type='button' title='Ver' class='btn btn-gradient-danger btn-rounded btn-icon'>
                           <i class='mdi mdi-eye'></i>
                         </button></a>
-                        <a href='javascript:void(0);'  data-href='pregunta.php?id=".$fila['id_articulo']."'  class='openPopup3'>
+                        <a href='javascript:void(0);'  data-href='pregunta.php?id=".$fila['id_articulo']."'  class='openPopup4'>
                         <button type='button' title='Eliminar' class='btn btn-gradient-dark btn-rounded btn-icon'>
                           <i class='mdi mdi-delete-forever'></i>
                         </button>
@@ -93,22 +93,44 @@ require('../../../configuracion/config.php');
 
 <!--MODAL PARA VER ARTÍCULO -->
 <script>
+
+    $(document).ready(function(){
+    $('.openPopup2').on('click',function(){
+        var dataURL = $(this).attr('data-href');
+        $('.modal-body').load(dataURL,function(){
+            $('#editar_imagen').modal({show:true});
+
+        });
+    }); 
+});
   $(document).ready(function(){
-    $('.openPopup1').on('click',function(){
+    $('.openPopup3').on('click',function(){
         var dataURL = $(this).attr('data-href');
         $('.modal-body').load(dataURL,function(){
             $('#ver').modal({show:true});
         });
     }); 
 });
+
+$(document).ready(function(){
+    $('.openPopup4').on('click',function(){
+        var dataURL = $(this).attr('data-href');
+        $('.modal-body').load(dataURL,function(){
+            $('#eliminar').modal({show:true});
+
+        });
+    }); 
+});
+
+
 </script>
 
 <!-- Modal -->
 <div class="modal fade" id="ver" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
     
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content ">
             <div class="modal-header">
                <h3 class="modal-title" id="exampleModalLabel">Artículo</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -126,58 +148,15 @@ require('../../../configuracion/config.php');
     </div>
 </div>
 
-<!--MODAL PARA EDITAR ARTÍCULO -->
-<script>
-  $(document).ready(function(){
-    $('.openPopup').on('click',function(){
-        var dataURL = $(this).attr('data-href');
-        $('.modal-body').load(dataURL,function(){
-            $('#editar').modal({show:true});
-
-        });
-    }); 
-});
-</script>
-<!-- Modal -->
-<div class="modal fade" id="editar" role="dialog">
-    <div class="modal-dialog">
-    
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-               <h3 class="modal-title" id="exampleModalLabel">Editar Artículo</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-            </div>
-            <div class="modal-body">
-        
-            </div>
-        
-        </div>
-      
-    </div>
-</div>
 
 
-<!--MODAL PARA EDITAR IMÁGEN -->
-<script>
-  $(document).ready(function(){
-    $('.openPopup2').on('click',function(){
-        var dataURL = $(this).attr('data-href');
-        $('.modal-body').load(dataURL,function(){
-            $('#editar_imagen').modal({show:true});
 
-        });
-    }); 
-});
-</script>
 <!-- Modal -->
 <div class="modal fade" id="editar_imagen" role="dialog">
     <div class="modal-dialog">
     
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content ">
             <div class="modal-header">
                <h3 class="modal-title" id="exampleModalLabel">Editar Imágen</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -194,21 +173,10 @@ require('../../../configuracion/config.php');
 </div>
 
 
-<!--MODAL PARA ELIMINAR -->
-<script>
-  $(document).ready(function(){
-    $('.openPopup3').on('click',function(){
-        var dataURL = $(this).attr('data-href');
-        $('.modal-body').load(dataURL,function(){
-            $('#eliminar').modal({show:true});
 
-        });
-    }); 
-});
-</script>
 <!-- Modal -->
 <div class="modal fade" id="eliminar" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog ">
     
         <!-- Modal content-->
         <div class="modal-content">

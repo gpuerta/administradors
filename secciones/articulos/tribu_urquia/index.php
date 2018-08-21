@@ -3,8 +3,8 @@ session_start();
 /* Connect To Database*/
 require('../../../configuracion/config.php');
 
-if(!isset($_SESSION["usuario"])){ //Si no ha iniciado sesión redirecciona a index.php
-    header("Location: ../../../index.php");
+if(!isset($_SESSION["usuario"])){ //Si no ha iniciado sesión redirecciona a index
+    header("Location: ../../../");
   }
   
 
@@ -25,19 +25,9 @@ if(!isset($_SESSION["usuario"])){ //Si no ha iniciado sesión redirecciona a ind
   <link rel="stylesheet" href="../../../css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../../images/favicon.png" />
-<!-- Js para editor de texto  -->
-<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"> </script>
-<script type="text/javascript">bkLib.onDomLoaded(function() { new
-  nicEditor({buttonList : ['fontSize', 'bold', 'italic', 'underline','left','right','center','justify']}).panelInstance('cuerpo'); });
-  </script>
+    <!-- editor -->
+  <link rel="stylesheet" href="../../../editor/bootstrap3-wysihtml5.min.css">
 
-  <script languaje="javascript">
-  function Ok()
-  {
-  nicEditors.findEditor('cuerpo').saveContent();
-  document.formname.submit();
-  }
- </script>
  <!-- Js para busqueda dinamica -->
 <script type="text/javascript" src="../../../js/jquery.min.js"></script>
 <script type="text/javascript" src="../../../js/main.js"></script>
@@ -85,7 +75,7 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
               </div>
             </a>
             <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="../../perfil/index.php">
+              <a class="dropdown-item" href="../../perfil/">
                 <i class="mdi mdi-account-circle mr-2 text-success"></i>
                 Perfil
               </a>
@@ -133,47 +123,47 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                 <li class="nav-item"> <a class="nav-link" href="../tribu_urquia/index.php">
+                 <li class="nav-item"> <a class="nav-link" href="../tribu_urquia/">
                   La Tribu de Urquia
                 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../ultravioleta/index.php">
+                <li class="nav-item"> <a class="nav-link" href="../ultravioleta/">
                   Ultravioleta
                 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../defiendete/index.php">
+                <li class="nav-item"> <a class="nav-link" href="../defiendete/">
                   Ni una Menos
                 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../opinion/index.php">
+                <li class="nav-item"> <a class="nav-link" href="../opinion/">
                   Opinión Feminista
                 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../proyectate/index.php">
+                <li class="nav-item"> <a class="nav-link" href="../proyectate/">
                   Proyectate
                 </a></li>
-                 <li class="nav-item"> <a class="nav-link" href="../nosotras/index.php">
+                 <li class="nav-item"> <a class="nav-link" href="../nosotras/">
                   Nosotras en el Mundo
                 </a></li>
               </ul>
             </div>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="../../audiovisual/index.php">
+            <a class="nav-link" href="../../audiovisual/">
               <span class="menu-title">Audiovisual</span>
               <i class="mdi mdi-video menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../biblioteca/index.php">
+            <a class="nav-link" href="../../biblioteca/">
               <span class="menu-title">Bliblioteca</span>
               <i class="mdi mdi-library menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../hero/index.php">
+            <a class="nav-link" href="../../hero/">
               <span class="menu-title">Hero</span>
               <i class="mdi mdi-image-area menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../usuarios/index.php">
+            <a class="nav-link" href="../../usuarios/">
               <span class="menu-title">Usuarios</span>
               <i class="mdi mdi-account-card-details menu-icon"></i>
             </a>
@@ -221,8 +211,8 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
             </div>
 <!--MODAL PARA NUEVO ARTÍCULO -->
 
-<div class="modal fade" id="nuevoarticulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade"  id="nuevoarticulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title" id="exampleModalLabel">Nuevo Artículo</h3>
@@ -233,36 +223,62 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
       <div class="modal-body">
 
  <form action="subir.php" method="post" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Título:</label>
-            <input type="text" class="form-control" id="recipient-name" name="titulo" required>
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Estatus:</label>
-              <select name="estatus" class="form-control">
+         <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Título</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="recipient-name" name="titulo" required>
+                        </div>
+                      </div>
+                       </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Estatus</label>
+                          <div class="col-sm-9">
+                            <select name="estatus" class="form-control">
                 <option value="1">Privado</option>
                 <option value="2">Publicado</option>
-                <option value="3">Principal</option>
+            
                
               </select>
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Referencia de la imágen:</label>
-            <input type="text" class="form-control" id="recipient-name" name="referencia" required>
-          </div>
-          <div class="form-group">
-                      <label>Imágen del Artículo</label>
-                      <input type="file" size="35"  name="img" class="file-upload-default" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+           <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Referencia de la imágen:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="recipient-name" name="referencia" required>
+                      <input type="hidden" class="form-control" id="recipient-name" value="<?=$_SESSION["usuario"];?>" name="autor" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Imágen del Artículo</label>
+                    <div class="col-sm-9">
+                        <input type="file" size="35"  name="img" class="file-upload-default" required>
                       <div class="input-group col-xs-12">
                         <input type="text"  class="form-control file-upload-info" disabled placeholder="Subir Imágen" >
                         <span class="input-group-append">
                           <button class="file-upload-browse btn btn-gradient-primary" type="button">Subir</button>
                         </span>
                       </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                    
           <div class="form-group">
             <label for="message-text" class="col-form-label">Artículo:</label>
-            <textarea class="form-control" style="width: 470px; height: 100px" id="cuerpo" name="detalle" required></textarea>
+            
+            <textarea id="editor1" name="detalle" required  name="editor1" class="form-control" rows="10" cols="80">
+                                           
+                    </textarea>
           </div>
         
       </div>
@@ -308,6 +324,19 @@ INNER JOIN tipo_usuario ON persona.fk_tipo_usuario = tipo_usuario.id_tipo_usuari
   <!-- Custom js for this page-->
   <script src="../../../js/file-upload.js"></script>
   <!-- End custom js for this page-->
+  <!-- Bootstrap WYSIHTML5 -->
+  <!-- CK Editor -->
+<script src="../../../editor/ckeditor/ckeditor.js"></script>
+<script src="../../../editor/bootstrap3-wysihtml5.all.min.js"></script>
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
+</script>
 </body>
  <?php 
 

@@ -29,14 +29,14 @@ if(!empty($_GET['id'])){
 
          ?>
                     
-                    <div align="center">
-                         	
-                       	<img src="<?=$ruta?>">
-                       		
+                   <div align="center">
+                            
+                        <img class="img-responsive" src="<?=$ruta?>">
+                             <br>
+                        <strong> <?=$titulo?></strong>
                       
-					</div>
-                         <br>
-                         <?=$titulo?>
+                    </div>
+                        
                          <br> <br>
                          <?=$detalle?>
                          <br><br>
